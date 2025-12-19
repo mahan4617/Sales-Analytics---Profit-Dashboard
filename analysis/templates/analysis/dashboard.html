@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Analysis Dashboard{% endblock %}
+{% block content %}
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h3 mb-0">Analysis Dashboard</h1>
+    </div>
+    <div id="alerts"></div>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div id="meta_line" class="small"></div>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-6"><div class="card"><div class="card-header">Monthly Sales & Profit</div><div class="card-body"><div id="monthly_chart"></div></div></div></div>
+      <div class="col-lg-6"><div class="card"><div class="card-header">Monthly Profit Margin (%)</div><div class="card-body"><div id="margin_chart"></div></div></div></div>
+      <div class="col-lg-6"><div class="card"><div class="card-header">Yearly Total Sales</div><div class="card-body"><div id="yearly_chart"></div></div></div></div>
+      <div class="col-lg-6"><div class="card"><div class="card-header">Payment Mode Distribution</div><div class="card-body"><div id="payment_chart"></div></div></div></div>
+      <div class="col-lg-6"><div class="card"><div class="card-header">Product-wise Total Sales</div><div class="card-body"><div id="product_sales_chart"></div></div></div></div>
+      <div class="col-lg-6"><div class="card"><div class="card-header">Product-wise Profit</div><div class="card-body"><div id="product_profit_chart"></div></div></div></div>
+    </div>
+    <script>
+      function getParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+      async function loadData() {
+        const source = getParam('source');
+        const id = getParam('id');
+        const url = (source && id) ? `/analysis/${source}/${id}/` : '/analysis/';
+        const res = await fetch(url);
+        const container = document.getElementById('alerts');
+        if (!res.ok) {
+          const txt = await res.text();
+          container.innerHTML = `<div class="alert alert-danger">Failed to load data: ${txt}</div>`;
+          return null;
+        }
+        const data = await res.json();
+        if (data.status !== 'ok') {
+          container.innerHTML = `<div class="alert alert-warning">No data available</div>`;
+          return null;
+        }
+        const metaLine = document.getElementById('meta_line');
+        if (data.meta && data.meta.file) {
+          const f = data.meta.file;
+          const shape = data.meta.shape || {rows: '-', columns: '-'};
+          metaLine.innerHTML = `Analyzing: <strong>${f.name}</strong> • Source: <span class="badge bg-warning text-dark">${f.source}</span> • Uploaded: ${f.uploaded_at} • Shape: ${shape.rows} rows × ${shape.columns} cols`;
+        }
+        return data.results;
+      }
+
+      function plotMonthly(results) {
+        const m = results.monthly || [];
+        const months = m.map(x => x.month);
+        const sales = m.map(x => x.total_sales);
+        const profit = m.map(x => x.profit);
+        const margin = m.map(x => x.profit_margin);
+        const baseLayout = {
+          paper_bgcolor: '#120729',
+          plot_bgcolor: '#120729',
+          font: { color: '#e6d7ff' },
+          margin: { t: 20 },
+          xaxis: { gridcolor: '#3a2a5e' },
+          yaxis: { gridcolor: '#3a2a5e' }
+        };
+        Plotly.newPlot('monthly_chart', [
+          { x: months, y: sales, type: 'bar', name: 'Total Sales', marker: { color: '#e3a72b', line: { color: '#ffcc66', width: 1 } } },
+          { x: months, y: profit, type: 'bar', name: 'Profit', marker: { color: '#7c3aed', line: { color: '#a78bfa', width: 1 } } },
+        ], { ...baseLayout, barmode: 'group' });
+        Plotly.newPlot('margin_chart', [
+          { x: months, y: margin, type: 'scatter', mode: 'lines+markers', name: 'Profit Margin (%)', line: { color: '#00d4ff', width: 3 }, marker: { color: '#00d4ff', size: 6 } },
+        ], { ...baseLayout, yaxis: { title: '%' } });
+      }
+
+      function plotYearly(results) {
+        const y = results.yearly_total_sales || [];
+        const baseLayout = {
+          paper_bgcolor: '#120729',
+          plot_bgcolor: '#120729',
+          font: { color: '#e6d7ff' },
+          margin: { t: 20 },
+          xaxis: { gridcolor: '#3a2a5e' },
+          yaxis: { gridcolor: '#3a2a5e' }
+        };
+        Plotly.newPlot('yearly_chart', [
+          { x: y.map(x => x.year), y: y.map(x => x.total_sales), type: 'bar', name: 'Total Sales', marker: { color: '#e3a72b', line: { color: '#ffcc66', width: 1 } } },
+        ], baseLayout);
+      }
+
+      function plotPaymentMode(results) {
+        const d = results.payment_mode_distribution || [];
+        Plotly.newPlot('payment_chart', [{
+          labels: d.map(x => x.payment_mode),
+          values: d.map(x => x.count),
+          type: 'pie',
+          marker: { colors: ['#e3a72b', '#7c3aed', '#00d4ff', '#16a34a', '#fb7185'] }
+        }], {
+          paper_bgcolor: '#120729',
+          plot_bgcolor: '#120729',
+          font: { color: '#e6d7ff' },
+          margin: { t: 20 }
+        });
+      }
+
+      function plotProducts(results) {
+        const ps = results.product_sales || [];
+        const pp = results.product_profit || [];
+        const baseLayout = {
+          paper_bgcolor: '#120729',
+          plot_bgcolor: '#120729',
+          font: { color: '#e6d7ff' },
+          margin: { t: 20 },
+          xaxis: { automargin: true, gridcolor: '#3a2a5e' },
+          yaxis: { gridcolor: '#3a2a5e' }
+        };
+        Plotly.newPlot('product_sales_chart', [{
+          x: ps.map(x => x.product_name),
+          y: ps.map(x => x.total_sales),
+          type: 'bar',
+          marker: { color: '#e3a72b', line: { color: '#ffcc66', width: 1 } }
+        }], baseLayout);
+        Plotly.newPlot('product_profit_chart', [{
+          x: pp.map(x => x.product_name),
+          y: pp.map(x => x.profit),
+          type: 'bar',
+          marker: { color: '#7c3aed', line: { color: '#a78bfa', width: 1 } }
+        }], baseLayout);
+      }
+
+      (async function init() {
+        const results = await loadData();
+        if (!results) return;
+        plotMonthly(results);
+        plotYearly(results);
+        plotPaymentMode(results);
+        plotProducts(results);
+      })();
+    </script>
+{% endblock %}

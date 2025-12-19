@@ -1,0 +1,21 @@
+product_name,category,cost_price,selling_price,quantity,payment_mode,no_of_quantity,phone_no,customer_name
+Notebook,Stationery,50,99,1,Cash,1,9841617002,Sneha
+Shoes,Footwear,2000,2999,1,Cash,1,9828688394,Rahul
+Notebook,Stationery,50,99,2,Cash,2,9609975503,Sneha
+Shoes,Footwear,2000,2999,2,UPI,2,9169558525,Rohit
+Notebook,Stationery,50,99,3,Card,3,9578037031,Amit
+T-Shirt,Clothing,300,599,2,UPI,2,9959604811,Rahul
+Water Bottle,Kitchen,200,349,2,UPI,2,9103218299,Sneha
+Water Bottle,Kitchen,200,349,1,Cash,1,9745594875,Rahul
+T-Shirt,Clothing,300,599,2,UPI,2,9451877920,Amit
+Shoes,Footwear,2000,2999,3,Cash,3,9700018984,Rohit
+Shoes,Footwear,2000,2999,1,Cash,1,9186865968,Rohit
+Mobile Phone,Electronics,12000,15000,1,Cash,1,9988148631,Sneha
+T-Shirt,Clothing,300,599,2,Cash,2,9837461669,Sneha
+Mobile Phone,Electronics,12000,15000,2,Card,2,9384842081,Rohit
+Notebook,Stationery,50,99,1,UPI,1,9716900057,Pooja
+Mobile Phone,Electronics,12000,15000,1,Card,1,9588405710,Pooja
+Water Bottle,Kitchen,200,349,1,Card,1,9137466939,Amit
+Water Bottle,Kitchen,200,349,3,UPI,3,9405494309,Rahul
+Notebook,Stationery,50,99,3,Cash,3,9198529577,Amit
+Mobile Phone,Electronics,12000,15000,2,UPI,2,9569786649,Sneha

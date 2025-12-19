@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}View File{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h4 mb-0">View File</h1>
+    <div class="text-muted">{{ name }} • {{ uploaded_at }}</div>
+  </div>
+  <div>
+    {% if file_url %}
+    <a class="btn btn-outline-secondary" href="{{ file_url }}" target="_blank">Download</a>
+    {% endif %}
+  </div>
+  </div>
+<div class="card">
+  <div class="card-header">Preview (first 200 rows)</div>
+  <div class="card-body">
+    {{ table_html|safe }}
+  </div>
+</div>
+{% endblock %}
