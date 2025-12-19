@@ -1,11 +1,11 @@
 # Sales Analytics & Profit Dashboard
-*Project Overview
+Project Overview
 
 This is a multi-user Django web application designed for store owners to analyze their sales data easily.
 Store owners can register, login, upload sales data (CSV/Excel) and view sales, profit, and performance insights through a clean dashboard with graphs.
 The system helps store owners make data-driven business decisions without manually analyzing Excel files.
 
-*Technologies Used
+Technologies Used
 
 -Backend: Django (Python)
 
@@ -20,7 +20,7 @@ The system helps store owners make data-driven business decisions without manual
 -File Handling: CSV, Excel (.xlsx)
 
 
-*How to Run the Project
+How to Run the Project
 
 1.Create & Activate Virtual Environment
 python -m venv venv
@@ -39,7 +39,7 @@ python manage.py runserver
 5.Open in Browser
 http://127.0.0.1:8000/
 
-*How the System Works
+How the System Works
 
 1.User registers and logs in
 
