@@ -50,3 +50,6 @@ How the System Works
 4.Dashboard displays sales, profit, and insights using graphs
 
 5.Each user sees only their own store data
+
+<img width="1920" height="1080" alt="Screenshot (219)" src="https://github.com/user-attachments/assets/df630436-f38b-4b7a-825a-be2a819f9b8a" />
+
