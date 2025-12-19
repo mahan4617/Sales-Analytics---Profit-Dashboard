@@ -54,5 +54,5 @@ How the System Works
 <img width="1920" height="1080" alt="Screenshot (219)" src="https://github.com/user-attachments/assets/df630436-f38b-4b7a-825a-be2a819f9b8a" />
 <img width="1920" height="1080" alt="Screenshot (215)" src="https://github.com/user-attachments/assets/a1310ea4-334e-4a46-aac3-7aaaa2c82769" />
 <img width="1920" height="1080" alt="Screenshot (216)" src="https://github.com/user-attachments/assets/e0c45fc7-f748-4653-93fa-acd3a6ba1c44" />
-<img width="1920" height="1080" alt="Screenshot (216)" src="https://github.com/user-attachments/assets/1a971d80-2e7e-4d58-9ea9-0c8a86560c50" />
+<img width="1920" height="1080" alt="Screenshot (217)" src="https://github.com/user-attachments/assets/7b9b26b3-19c2-4758-b668-9585e3d363dd" />
 <img width="1920" height="1080" alt="Screenshot (221)" src="https://github.com/user-attachments/assets/4b2d67cb-4ce8-4b95-b644-8c24aef6d085" />
