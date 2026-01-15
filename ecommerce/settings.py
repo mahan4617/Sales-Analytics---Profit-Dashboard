@@ -26,6 +26,9 @@ SECRET_KEY = 'django-insecure-b^!olsav2&(fdvxn!8u8g!0!ue31qd$5)vodl^uzg1b$r38)8d
 DEBUG = True
 
 ALLOWED_HOSTS = ["sales-analytics-profit-dashboard-2.onrender.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://sales-analytics-profit-dashboard-2.onrender.com",
+]
 
 
 # Application definition
@@ -124,4 +127,5 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 
